@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>i19ruemat_cript.html</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="CRIPTING">
+        <meta name="keywords" content="HTML,CSS,JavaScript">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Matteo Ruedi">
+        <!--data creazione: 01.05.2021-->
+        <!--browser: chrome-->
+        <script>
+            var alfabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+            var num = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+            var alfabetCript = new Array(26);
+            var numCript = new Array(10);
+            var rand25 = [];
+            var rand10 = [];
+            function fill(){
+                while(rand25.length < 26){
+                    var r = Math.floor(Math.random() * 26);
+                    if(rand25.indexOf(r) === -1) rand25.push(r);
+                }
+                for(var i = 0;i < 26;i++){
+                    alfabetCript[i] = alfabet[rand25[i]];
+                }
+                var alfa = "";
+                for(var i = 0;i < 26;i++){
+                    alfa += alfabetCript[i];
+                }
+                document.getElementById("testoCriptato").innerHTML = "CRIPTO ALFABET: ";
+                document.getElementById("testoCriptato").innerHTML += alfa;
+                while(rand10.length < 10){
+                    var r = Math.floor(Math.random() * 10);
+                    if(rand10.indexOf(r) === -1) rand10.push(r);
+                }
+                for(var i = 0;i < 10;i++){
+                    numCript[i] = num[rand10[i]];
+                }
+
+                var numeri = "";
+                for(var i = 0;i < 10;i++){
+                    numeri += numCript[i];
+                }
+                document.getElementById("testoCriptato").innerHTML += numeri;
+            }
+
+            function cript(){
+                var val = document.getElementById("input").value;
+                val = val.toLocaleLowerCase();
+
+                var valArray = new Array(val.length+1);
+                for(var i = 0;i < valArray.length;i++){
+                    valArray[i] = val.charAt(i);
+                }
+
+                for(var i = 0;i < valArray.length;i++){
+                    var current = valArray[i];
+
+                    var index = 0;
+
+                    if(isNaN(current)){
+                        index = alfabet.indexOf(current);
+                        valArray[i] = current.replace(alfabet[index], alfabetCript[index]);
+
+                    }else{
+                        index = num.indexOf(Number(current));
+                        valArray[i] = current.replace(num[index], numCript[index]);
+                    }
+                }
+
+                var criptedString = "";
+                for(var i = 0;i < valArray.length;i++){
+                    criptedString += valArray[i];
+                }
+                document.getElementById("cripted").value = criptedString;
+            }
+            function refreshPage(){
+                window.location.reload();
+            } 
+        </script>
+    </head>
+    <body onload="fill()" style="text-align: center">
+        <h1>CHIAVE MONOALFABETICA</h1>
+        <p>ORIGINAL: abcdefghijklmnopqrstuvwxyz1234567890</p>
+        <a id="testoCriptato"></a>
+        <input type="button" value="CHANGE ALFABET" onclick="refreshPage()"/><br><br>
+        <a>INSERIRE TESTO</a><textarea id="input" oninput="cript();"></textarea><br><br>
+        <a>TESTO CRIPTATO</a><textarea type="text" id="cripted" disabled></textarea><br><br>
+    </body>
+</html>
